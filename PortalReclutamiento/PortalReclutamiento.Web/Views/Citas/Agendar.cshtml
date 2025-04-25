@@ -1,0 +1,93 @@
+﻿@using PortalReclutamiento.PortalReclutamiento.Domain.Models
+@model Aplicacion
+@{
+    ViewData["Title"] = "Agendar Entrevista";
+}
+
+<div class="container">
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-controller="Admin" asp-action="Index">Panel de Control</a></li>
+            <li class="breadcrumb-item"><a asp-controller="Citas" asp-action="Index">Entrevistas</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Agendar Entrevista</li>
+        </ol>
+    </nav>
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card mb-4 shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Agendar Entrevista</h5>
+                </div>
+                <div class="card-body">
+                    @if (TempData["ErrorMessage"] != null)
+                    {
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            @TempData["ErrorMessage"]
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    }
+
+                    <form asp-action="Agendar" method="post">
+                        <input type="hidden" asp-for="Id" />
+
+                        <div class="mb-3">
+                            <label class="form-label">Nombre del Candidato</label>
+                            <input type="text" class="form-control" value="@Model.Nombre" readonly />
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Oferta</label>
+                            <input type="text" class="form-control" value="@(Model.Oferta?.Titulo ?? "N/A")" readonly />
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-control" value="@Model.Email" readonly />
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Teléfono</label>
+                            <input type="tel" class="form-control" value="@Model.Telefono" readonly />
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="FechaCita" class="form-label">Fecha y Hora de la Entrevista</label>
+                            <input asp-for="FechaCita" type="datetime-local" class="form-control" required />
+                            <span asp-validation-for="FechaCita" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="ComentariosAdmin" class="form-label">Comentarios</label>
+                            <textarea asp-for="ComentariosAdmin" class="form-control" rows="3"></textarea>
+                            <span asp-validation-for="ComentariosAdmin" class="text-danger"></span>
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <a asp-action="Index" class="btn btn-secondary">Volver</a>
+                            <button type="submit" class="btn btn-primary">Agendar Entrevista</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-header bg-info text-white">
+                    <h5 class="mb-0">Información de la Aplicación</h5>
+                </div>
+                <div class="card-body">
+                    <p><strong>Fecha de Aplicación:</strong> @Model.FechaAplicacion.ToString("dd/MM/yyyy HH:mm")</p>
+                    <p><strong>Estado Actual:</strong> @Model.Estado</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

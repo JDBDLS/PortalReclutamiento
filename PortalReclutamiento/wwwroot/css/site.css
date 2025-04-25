@@ -1,0 +1,88 @@
+﻿:root {
+    --primary: #0d6efd;
+    --primary-hover: #0b5ed7;
+}
+
+html {
+    height: 100%;
+}
+
+body {
+    min-height: 100%;
+    margin: 0;
+    padding: 0;
+    padding-bottom: 40px; /* Espacio para el footer compacto */
+    position: relative;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+.btn-primary {
+    background-color: var(--primary);
+    border-color: var(--primary);
+}
+
+    .btn-primary:hover {
+        background-color: var(--primary-hover);
+        border-color: var(--primary-hover);
+    }
+
+.text-primary {
+    color: var(--primary) !important;
+}
+
+.card {
+    border-radius: 0.5rem;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    margin-bottom: 20px;
+    overflow: visible; /* Asegura que el contenido no se corte */
+}
+
+.card-body {
+    padding: 1.5rem;
+}
+
+/* Estilos para los cuadros azules */
+.bg-primary {
+    background-color: var(--primary) !important;
+}
+
+.text-white {
+    color: white !important;
+}
+
+.shadow {
+    box-shadow: 0 .25rem .75rem rgba(0,0,0,.15) !important;
+}
+
+/* Pie de página compacto */
+.compact-footer {
+    background-color: #f8f9fa;
+    border-top: 1px solid #dee2e6;
+    padding: 10px 0;
+    font-size: 0.85rem;
+    margin-top: 50px; /* Espacio entre el contenido y el footer */
+    width: 100%;
+}
+
+/* Asegura que los cuadros azules tengan suficiente espacio */
+.row {
+    margin-bottom: 20px;
+}
+
+/* Ajustes para dispositivos móviles */
+@media (max-width: 768px) {
+    .compact-footer {
+        font-size: 0.75rem;
+        padding: 5px 0;
+    }
+
+        .compact-footer p {
+            margin-bottom: 0;
+        }
+}
+
+/* Asegura que las tarjetas tengan altura completa */
+.card.h-100 {
+    height: 100% !important;
+    min-height: 150px; /* Altura mínima para asegurar que se vea todo el contenido */
+}

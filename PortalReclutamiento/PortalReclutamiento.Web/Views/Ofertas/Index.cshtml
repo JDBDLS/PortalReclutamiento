@@ -1,0 +1,92 @@
+﻿@using PortalReclutamiento.PortalReclutamiento.Domain.Models
+@model IEnumerable<Oferta>
+@{
+    ViewData["Title"] = "Ofertas de Empleo";
+}
+
+<div class="container">
+    <h1 class="mb-4">Ofertas de Empleo</h1>
+
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <form method="get" asp-action="Index">
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <label for="ubicacion" class="form-label">Ubicación</label>
+                                <select id="ubicacion" name="ubicacion" class="form-select">
+                                    <option value="">Todas las ubicaciones</option>
+                                    @foreach (var ubicacion in ViewBag.Ubicaciones)
+                                    {
+                                        <option value="@ubicacion" selected="@(ViewBag.UbicacionSeleccionada == ubicacion)">@ubicacion</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label for="categoria" class="form-label">Categoría</label>
+                                <select id="categoria" name="categoria" class="form-select">
+                                    <option value="">Todas las categorías</option>
+                                    @foreach (var categoria in ViewBag.Categorias)
+                                    {
+                                        <option value="@categoria" selected="@(ViewBag.CategoriaSeleccionada == categoria)">@categoria</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label for="ordenamiento" class="form-label">Ordenar por</label>
+                                <select id="ordenamiento" name="ordenamiento" class="form-select">
+                                    <option value="fecha_desc" selected="@(ViewBag.Ordenamiento == "fecha_desc")">Más recientes</option>
+                                    <option value="fecha_asc" selected="@(ViewBag.Ordenamiento == "fecha_asc")">Más antiguas</option>
+                                    <option value="salario_desc" selected="@(ViewBag.Ordenamiento == "salario_desc")">Mayor salario</option>
+                                    <option value="salario_asc" selected="@(ViewBag.Ordenamiento == "salario_asc")">Menor salario</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <button type="submit" class="btn btn-primary">Filtrar</button>
+                                <a asp-action="Index" class="btn btn-outline-secondary">Limpiar</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        @if (Model.Any())
+        {
+            @foreach (var oferta in Model)
+            {
+                <div class="col-md-6 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title">@oferta.Titulo</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">@oferta.Empresa</h6>
+                            <p class="card-text">
+                                <strong>Ubicación:</strong> @oferta.Ubicacion<br />
+                                <strong>Salario:</strong> $@oferta.Salario<br />
+                                <strong>Categoría:</strong> @oferta.Categoria
+                            </p>
+                            <p class="card-text">@(oferta.Descripcion.Length > 100 ? oferta.Descripcion.Substring(0, 100) + "..." : oferta.Descripcion)</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <a asp-action="Detalles" asp-route-id="@oferta.Id" class="btn btn-primary">Ver detalles</a>
+                                <small class="text-muted">Publicado: @oferta.FechaPublicacion.ToString("dd/MM/yyyy")</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="col-12">
+                <div class="alert alert-info">
+                    No se encontraron ofertas de empleo con los filtros seleccionados.
+                </div>
+            </div>
+        }
+    </div>
+</div>

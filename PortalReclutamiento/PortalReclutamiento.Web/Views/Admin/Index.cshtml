@@ -1,0 +1,39 @@
+﻿@{
+    ViewData["Title"] = "Panel de Control";
+}
+
+<div class="container">
+    <h1 class="mb-4">Panel de Control</h1>
+
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Gestión de Entrevistas</h5>
+                    <p class="card-text">Administra las entrevistas y citas con candidatos.</p>
+                    <a asp-controller="Citas" asp-action="Index" class="btn btn-primary">Ir a Entrevistas</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Gestión de Ofertas</h5>
+                    <p class="card-text">Administra las ofertas de trabajo publicadas.</p>
+                    <a asp-controller="Admin" asp-action="Ofertas" class="btn btn-primary">Ir a Ofertas</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Gestión de Planes</h5>
+                    <p class="card-text">Administra los planes de suscripción.</p>
+                    <a asp-controller="Admin" asp-action="Planes" class="btn btn-primary">Ir a Planes</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

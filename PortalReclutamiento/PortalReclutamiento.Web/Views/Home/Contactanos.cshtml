@@ -1,0 +1,53 @@
+﻿@using PortalReclutamiento.PortalReclutamiento.Domain.Models
+@model Contacto
+@{
+    ViewData["Title"] = "Contáctanos";
+}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="text-center mb-5">
+                <h1 class="display-4">Contáctanos</h1>
+                <p class="lead">Estamos aquí para ayudarte. Envíanos tu mensaje y te responderemos lo antes posible.</p>
+            </div>
+
+            @if (TempData["Mensaje"] != null)
+            {
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    @TempData["Mensaje"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            }
+
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <form asp-controller="Contacto" asp-action="Enviar" method="post">
+                        <div class="mb-3">
+                            <label for="Nombre" class="form-label">Nombre</label>
+                            <input type="text" class="form-control" id="Nombre" name="Nombre" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="Email" class="form-label">Correo electrónico</label>
+                            <input type="email" class="form-control" id="Email" name="Email" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="Asunto" class="form-label">Asunto</label>
+                            <input type="text" class="form-control" id="Asunto" name="Asunto" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="Mensaje" class="form-label">Mensaje</label>
+                            <textarea class="form-control" id="Mensaje" name="Mensaje" rows="5" required></textarea>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary">Enviar mensaje</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Se eliminó la sección de información de contacto que estaba aquí -->
+
+        </div>
+    </div>
+</div>

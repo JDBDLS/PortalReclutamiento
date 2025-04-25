@@ -1,0 +1,57 @@
+﻿@using PortalReclutamiento.PortalReclutamiento.Domain.Models
+@model Oferta
+@{
+    ViewData["Title"] = "Detalles de Oferta";
+}
+
+<div class="container">
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-controller="Admin" asp-action="Index">Panel de Control</a></li>
+            <li class="breadcrumb-item"><a asp-controller="Admin" asp-action="Ofertas">Ofertas</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Detalles de Oferta</li>
+        </ol>
+    </nav>
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">Detalles de la Oferta</h5>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-8">
+                    <h2>@Model.Titulo</h2>
+                    <h5 class="text-muted">@Model.Empresa</h5>
+
+                    <div class="mb-4 mt-3">
+                        <span class="badge bg-primary me-2">@Model.Categoria</span>
+                        <span class="badge bg-secondary me-2">@Model.Ubicacion</span>
+                        <span class="badge bg-success">$@Model.Salario.ToString("N2")</span>
+                    </div>
+
+                    <h5>Descripción</h5>
+                    <p>@Model.Descripcion</p>
+
+                    <p class="text-muted mt-4">Publicado: @Model.FechaPublicacion.ToString("dd/MM/yyyy")</p>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-header bg-info text-white">
+                            <h5 class="mb-0">Acciones</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="d-grid gap-2">
+                                <a asp-controller="Ofertas" asp-action="Editar" asp-route-id="@Model.Id" class="btn btn-primary">Editar Oferta</a>
+                                <a asp-controller="Ofertas" asp-action="Eliminar" asp-route-id="@Model.Id" class="btn btn-danger">Eliminar Oferta</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-start">
+        <a asp-controller="Admin" asp-action="Ofertas" class="btn btn-secondary">Volver a la lista</a>
+    </div>
+</div>

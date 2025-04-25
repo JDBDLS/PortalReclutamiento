@@ -1,0 +1,68 @@
+﻿@using PortalReclutamiento.PortalReclutamiento.Domain.Models
+@model Oferta
+@{
+    ViewData["Title"] = Model.Titulo;
+}
+
+<div class="container">
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Inicio</a></li>
+            <li class="breadcrumb-item"><a asp-controller="Ofertas" asp-action="Index">Ofertas</a></li>
+            <li class="breadcrumb-item active" aria-current="page">@Model.Titulo</li>
+        </ol>
+    </nav>
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card mb-4 shadow-sm">
+                <div class="card-body">
+                    <h1 class="card-title">@Model.Titulo</h1>
+                    <h5 class="card-subtitle mb-3 text-muted">@Model.Empresa</h5>
+
+                    <div class="mb-4">
+                        <span class="badge bg-primary me-2">@Model.Categoria</span>
+                        <span class="badge bg-secondary me-2">@Model.Ubicacion</span>
+                        <span class="badge bg-success">$@Model.Salario</span>
+                    </div>
+
+                    <h4>Descripción</h4>
+                    <p class="card-text">@Model.Descripcion</p>
+
+                    <div class="mt-4">
+                        <p class="text-muted">Publicado: @Model.FechaPublicacion.ToString("dd/MM/yyyy")</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Aplicar a esta oferta</h5>
+                </div>
+                <div class="card-body">
+                    
+                    <form asp-controller="Ofertas" asp-action="Aplicar" asp-route-id="@Model.Id" method="post">
+                        <div class="mb-3">
+                            <label for="Nombre" class="form-label">Nombre completo</label>
+                            <input type="text" class="form-control" id="Nombre" name="Nombre" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="Email" class="form-label">Correo electrónico</label>
+                            <input type="email" class="form-control" id="Email" name="Email" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="Telefono" class="form-label">Teléfono</label>
+                            <input type="tel" class="form-control" id="Telefono" name="Telefono" required>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100">Enviar aplicación</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

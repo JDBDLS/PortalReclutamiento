@@ -1,0 +1,126 @@
+﻿@using PortalReclutamiento.PortalReclutamiento.Domain.Models
+@model IEnumerable<Aplicacion>
+@{
+    ViewData["Title"] = "Administración de Solicitudes";
+}
+
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Administración de Solicitudes</h1>
+    </div>
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            @TempData["ErrorMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    @if (ViewBag.ErrorMessage != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            @ViewBag.ErrorMessage
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            @if (Model != null && Model.Any())
+            {
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Oferta</th>
+                                <th>Aplicante</th>
+                                <th>Email</th>
+                                <th>Teléfono</th>
+                                <th>Fecha</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @if (item.Oferta != null)
+                                        {
+                                            @item.Oferta.Titulo
+                                        }
+                                        else
+                                        {
+                                            <span class="text-danger">Oferta no disponible</span>
+                                        }
+                                    </td>
+                                    <td>@item.Nombre</td>
+                                    <td>@item.Email</td>
+                                    <td>@item.Telefono</td>
+                                    <td>
+                                        @if (item.FechaAplicacion != default)
+                                        {
+                                            @item.FechaAplicacion.ToString("dd/MM/yyyy")
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (!string.IsNullOrEmpty(item.Estado))
+                                        {
+                                            <span class="badge @GetEstadoClass(item.Estado)">@item.Estado</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-secondary">Pendiente</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        <div class="btn-group" role="group">
+                                            <a asp-action="Detalles" asp-route-id="@item.Id" class="btn btn-sm btn-outline-info">Detalles</a>
+                                            <a asp-action="Editar" asp-route-id="@item.Id" class="btn btn-sm btn-outline-primary">Editar</a>
+                                            <a asp-action="Eliminar" asp-route-id="@item.Id" class="btn btn-sm btn-outline-danger">Eliminar</a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                @if (ViewBag.ErrorMessage == null)
+                {
+                    <div class="alert alert-info" role="alert">
+                        No hay solicitudes disponibles en este momento.
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>
+
+@functions {
+    public string GetEstadoClass(string estado)
+    {
+        return estado switch
+        {
+            "Pendiente" => "bg-secondary",
+            "Revisión" => "bg-info",
+            "Entrevista" => "bg-warning",
+            "Contratado" => "bg-success",
+            "Rechazado" => "bg-danger",
+            _ => "bg-secondary"
+        };
+    }
+}
+
+@section Scripts {
+    <script>
+      
+        setTimeout(function() {
+            $('.alert').alert('close');
+        }, 5000);
+    </script>
+}

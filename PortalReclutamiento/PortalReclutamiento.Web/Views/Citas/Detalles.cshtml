@@ -1,0 +1,84 @@
+﻿@using PortalReclutamiento.PortalReclutamiento.Domain.Models
+@model Aplicacion
+@{
+    ViewData["Title"] = "Detalles de la Aplicación";
+}
+
+<div class="container">
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-controller="Admin" asp-action="Index">Panel de Control</a></li>
+            <li class="breadcrumb-item"><a asp-controller="Citas" asp-action="Index">Entrevistas</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Detalles de la Aplicación</li>
+        </ol>
+    </nav>
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">Detalles de la Aplicación</h5>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <h6 class="fw-bold">Información del Candidato</h6>
+                    <hr />
+                    <dl class="row">
+                        <dt class="col-sm-4">Nombre:</dt>
+                        <dd class="col-sm-8">@Model.Nombre</dd>
+
+                        <dt class="col-sm-4">Email:</dt>
+                        <dd class="col-sm-8">@Model.Email</dd>
+
+                        <dt class="col-sm-4">Teléfono:</dt>
+                        <dd class="col-sm-8">@Model.Telefono</dd>
+                    </dl>
+                </div>
+                <div class="col-md-6">
+                    <h6 class="fw-bold">Información de la Aplicación</h6>
+                    <hr />
+                    <dl class="row">
+                        <dt class="col-sm-4">Oferta:</dt>
+                        <dd class="col-sm-8">@(Model.Oferta?.Titulo ?? "N/A")</dd>
+
+                        <dt class="col-sm-4">Empresa:</dt>
+                        <dd class="col-sm-8">@(Model.Oferta?.Empresa ?? "N/A")</dd>
+
+                        <dt class="col-sm-4">Fecha de Aplicación:</dt>
+                        <dd class="col-sm-8">@Model.FechaAplicacion.ToString("dd/MM/yyyy HH:mm")</dd>
+
+                        <dt class="col-sm-4">Estado:</dt>
+                        <dd class="col-sm-8">
+                            <span class="badge @(Model.Estado == "Pendiente" ? "bg-warning" :
+                                               Model.Estado == "En Proceso" ? "bg-info" :
+                                               Model.Estado == "Entrevista Agendada" ? "bg-primary" :
+                                               Model.Estado == "Rechazado" ? "bg-danger" :
+                                               Model.Estado == "Contratado" ? "bg-success" : "bg-secondary")">
+                                @Model.Estado
+                            </span>
+                        </dd>
+
+                        @if (Model.FechaCita.HasValue)
+                        {
+                            <dt class="col-sm-4">Fecha de Entrevista:</dt>
+                            <dd class="col-sm-8">@Model.FechaCita.Value.ToString("dd/MM/yyyy HH:mm")</dd>
+                        }
+                    </dl>
+                </div>
+            </div>
+
+            @if (!string.IsNullOrEmpty(Model.ComentariosAdmin))
+            {
+                <div class="mt-4">
+                    <h6 class="fw-bold">Comentarios Administrativos</h6>
+                    <hr />
+                    <p>@Model.ComentariosAdmin</p>
+                </div>
+            }
+
+            <div class="mt-4 d-flex justify-content-between">
+                <a asp-action="Index" class="btn btn-secondary">Volver</a>
+                <a asp-action="Agendar" asp-route-id="@Model.Id" class="btn btn-primary">Agendar Entrevista</a>
+            </div>
+        </div>
+    </div>
+</div>

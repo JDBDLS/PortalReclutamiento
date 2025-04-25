@@ -1,0 +1,90 @@
+﻿@using PortalReclutamiento.PortalReclutamiento.Domain.Models
+@model IEnumerable<Aplicacion>
+@{
+    ViewData["Title"] = "Gestión de Entrevistas";
+}
+
+<div class="container">
+    <h1 class="mb-4">Gestión de Entrevistas</h1>
+
+    @if (ViewBag.ErrorMessage != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            @ViewBag.ErrorMessage
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            @if (Model != null && Model.Any())
+            {
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Email</th>
+                                <th>Teléfono</th>
+                                <th>Oferta</th>
+                                <th>Fecha Aplicación</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.Nombre</td>
+                                    <td>@item.Email</td>
+                                    <td>@item.Telefono</td>
+                                    <td>@(item.Oferta?.Titulo ?? "N/A")</td>
+                                    <td>@item.FechaAplicacion.ToString("dd/MM/yyyy")</td>
+                                    <td>
+                                        <span class="badge @(item.Estado == "Pendiente" ? "bg-warning" :
+                                                            item.Estado == "En Proceso" ? "bg-info" :
+                                                            item.Estado == "Entrevista Agendada" ? "bg-primary" :
+                                                            item.Estado == "Rechazado" ? "bg-danger" :
+                                                            item.Estado == "Contratado" ? "bg-success" : "bg-secondary")">
+                                            @item.Estado
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <div class="btn-group" role="group">
+                                            <a asp-action="Detalles" asp-route-id="@item.Id" class="btn btn-sm btn-outline-info">Detalles</a>
+                                            <a asp-action="Agendar" asp-route-id="@item.Id" class="btn btn-sm btn-outline-primary">Agendar</a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <div class="alert alert-info" role="alert">
+                    No hay solicitudes pendientes en este momento.
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        
+        setTimeout(function() {
+            $('.alert').alert('close');
+        }, 5000);
+    </script>
+}

@@ -1,0 +1,62 @@
+﻿@{
+    ViewData["Title"] = "Inicio";
+}
+
+<div class="text-center">
+    <h1 class="display-4 mb-4">Bienvenido a JobLink</h1>
+    <p class="lead mb-5">Encuentra las mejores oportunidades laborales o el mejor talento para tu empresa.</p>
+
+    <div class="row justify-content-center mb-5">
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-body text-center">
+                    <h3 class="card-title">Busca empleo</h3>
+                    <p class="card-text">Explora cientos de ofertas de trabajo y encuentra la oportunidad perfecta para ti.</p>
+                    <a asp-controller="Ofertas" asp-action="Index" class="btn btn-primary">Ver ofertas</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-body text-center">
+                    <h3 class="card-title">Para empresas</h3>
+                    <p class="card-text">Publica tus ofertas de trabajo y encuentra a los mejores candidatos.</p>
+                    <a asp-controller="Home" asp-action="Empresas" class="btn btn-primary">Más información</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-5 mb-5">
+        <h2 class="mb-4">¿Por qué elegirnos?</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card h-100 bg-primary text-white shadow">
+                    <div class="card-body">
+                        <h5 class="card-title">Amplia red de empresas</h5>
+                        <p class="card-text">Conectamos con las mejores empresas del mercado.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 bg-primary text-white shadow">
+                    <div class="card-body">
+                        <h5 class="card-title">Proceso simplificado</h5>
+                        <p class="card-text">Aplicación rápida y sencilla a las ofertas de trabajo.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 bg-primary text-white shadow">
+                    <div class="card-body">
+                        <h5 class="card-title">Soporte personalizado</h5>
+                        <p class="card-text">Te acompañamos en todo el proceso de reclutamiento.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Espacio adicional antes del footer -->
+    <div style="margin-bottom: 50px;"></div>
+</div>

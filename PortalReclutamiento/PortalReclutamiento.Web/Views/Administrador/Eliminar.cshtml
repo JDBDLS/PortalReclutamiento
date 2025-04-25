@@ -1,0 +1,58 @@
+﻿@using PortalReclutamiento.PortalReclutamiento.Domain.Models
+@model Oferta
+@{
+    ViewData["Title"] = "Eliminar Oferta";
+}
+
+<div class="container">
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-controller="Administrador" asp-action="Index">Administrador</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Eliminar Oferta</li>
+        </ol>
+    </nav>
+
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-header bg-danger text-white">
+                    <h4 class="mb-0">Eliminar Oferta de Empleo</h4>
+                </div>
+                <div class="card-body">
+                    <h3>¿Estás seguro de que deseas eliminar esta oferta?</h3>
+                    <div class="alert alert-warning">
+                        Esta acción no se puede deshacer.
+                    </div>
+
+                    <dl class="row mt-4">
+                        <dt class="col-sm-3">Título</dt>
+                        <dd class="col-sm-9">@Model.Titulo</dd>
+
+                        <dt class="col-sm-3">Empresa</dt>
+                        <dd class="col-sm-9">@Model.Empresa</dd>
+
+                        <dt class="col-sm-3">Ubicación</dt>
+                        <dd class="col-sm-9">@Model.Ubicacion</dd>
+
+                        <dt class="col-sm-3">Salario</dt>
+                        <dd class="col-sm-9">$@Model.Salario</dd>
+
+                        <dt class="col-sm-3">Categoría</dt>
+                        <dd class="col-sm-9">@Model.Categoria</dd>
+
+                        <dt class="col-sm-3">Fecha de Publicación</dt>
+                        <dd class="col-sm-9">@Model.FechaPublicacion.ToString("dd/MM/yyyy")</dd>
+                    </dl>
+
+                    <form asp-action="Eliminar" method="post">
+                        <input type="hidden" asp-for="Id" />
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a asp-action="Index" class="btn btn-outline-secondary">Cancelar</a>
+                            <button type="submit" class="btn btn-danger">Eliminar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

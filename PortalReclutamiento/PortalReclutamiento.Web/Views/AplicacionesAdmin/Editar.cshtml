@@ -1,0 +1,77 @@
+﻿@using PortalReclutamiento.PortalReclutamiento.Domain.Models
+@model Aplicacion
+
+@{
+    ViewData["Title"] = "Editar Solicitud";
+}
+
+<div class="container mt-4">
+    <h1>Editar Solicitud</h1>
+
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">Solicitud para: @Model.Oferta.Titulo</h5>
+        </div>
+        <div class="card-body">
+            <form asp-action="Editar">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Id" />
+                <input type="hidden" asp-for="OfertaId" />
+                <input type="hidden" asp-for="Nombre" />
+                <input type="hidden" asp-for="Email" />
+                <input type="hidden" asp-for="Telefono" />
+                <input type="hidden" asp-for="FechaAplicacion" />
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5>Información del Aplicante</h5>
+                        <dl class="row">
+                            <dt class="col-sm-4">Nombre:</dt>
+                            <dd class="col-sm-8">@Model.Nombre</dd>
+
+                            <dt class="col-sm-4">Email:</dt>
+                            <dd class="col-sm-8">@Model.Email</dd>
+
+                            <dt class="col-sm-4">Teléfono:</dt>
+                            <dd class="col-sm-8">@Model.Telefono</dd>
+
+                            <dt class="col-sm-4">Fecha de Aplicación:</dt>
+                            <dd class="col-sm-8">@Model.FechaAplicacion.ToString("dd/MM/yyyy")</dd>
+                        </dl>
+                    </div>
+                </div>
+
+                <div class="row mt-4">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="Estado" class="control-label">Estado de la Solicitud</label>
+                            <select asp-for="Estado" class="form-control" asp-items="ViewBag.Estados"></select>
+                            <span asp-validation-for="Estado" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label asp-for="ComentariosAdmin" class="control-label">Comentarios del Administrador</label>
+                            <textarea asp-for="ComentariosAdmin" class="form-control" rows="5"></textarea>
+                            <span asp-validation-for="ComentariosAdmin" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group mt-4">
+                    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,0 +1,59 @@
+﻿@using PortalReclutamiento.PortalReclutamiento.Domain.Models
+@model Oferta
+@{
+    ViewData["Title"] = "Eliminar Oferta";
+}
+
+<div class="container">
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-controller="Admin" asp-action="Index">Panel de Control</a></li>
+            <li class="breadcrumb-item"><a asp-controller="Admin" asp-action="Ofertas">Ofertas</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Eliminar Oferta</li>
+        </ol>
+    </nav>
+
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <div class="card shadow-sm">
+                <div class="card-header bg-danger text-white">
+                    <h5 class="mb-0">Eliminar Oferta</h5>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-warning">
+                        <h5>¿Estás seguro de que deseas eliminar esta oferta?</h5>
+                        <p>Esta acción no se puede deshacer.</p>
+                    </div>
+
+                    <dl class="row">
+                        <dt class="col-sm-3">Título:</dt>
+                        <dd class="col-sm-9">@Model.Titulo</dd>
+
+                        <dt class="col-sm-3">Empresa:</dt>
+                        <dd class="col-sm-9">@Model.Empresa</dd>
+
+                        <dt class="col-sm-3">Ubicación:</dt>
+                        <dd class="col-sm-9">@Model.Ubicacion</dd>
+
+                        <dt class="col-sm-3">Categoría:</dt>
+                        <dd class="col-sm-9">@Model.Categoria</dd>
+
+                        <dt class="col-sm-3">Salario:</dt>
+                        <dd class="col-sm-9">$@Model.Salario.ToString("N2")</dd>
+
+                        <dt class="col-sm-3">Fecha de Publicación:</dt>
+                        <dd class="col-sm-9">@Model.FechaPublicacion.ToString("dd/MM/yyyy")</dd>
+                    </dl>
+
+                    <form asp-action="Eliminar" method="post">
+                        <input type="hidden" asp-for="Id" />
+                        <div class="d-flex justify-content-between">
+                            <a asp-controller="Admin" asp-action="Ofertas" class="btn btn-secondary">Volver</a>
+                            <button type="submit" class="btn btn-danger">Eliminar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,112 @@
+﻿@using PortalReclutamiento.PortalReclutamiento.Domain.Models
+@model IEnumerable<Aplicacion>
+@{
+    ViewData["Title"] = "Mis Solicitudes";
+}
+
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Mis Solicitudes de Empleo</h1>
+        <div>
+            <span class="text-muted me-2">@ViewBag.UserEmail</span>
+            <a asp-action="CerrarSesion" class="btn btn-outline-secondary btn-sm">Cambiar correo</a>
+        </div>
+    </div>
+
+    @if (ViewBag.ErrorMessage != null)
+    {
+        <div class="alert alert-danger">
+            @ViewBag.ErrorMessage
+        </div>
+    }
+    else if (!Model.Any())
+    {
+        <div class="alert alert-info">
+            No tienes solicitudes de empleo registradas con este correo electrónico.
+        </div>
+    }
+    else
+    {
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Oferta</th>
+                                <th>Empresa</th>
+                                <th>Fecha de Aplicación</th>
+                                <th>Estado</th>
+                                <th>Comentarios</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@(item.Oferta?.Titulo ?? "N/A")</td>
+                                    <td>@(item.Oferta?.Empresa ?? "N/A")</td>
+                                    <td>@item.FechaAplicacion.ToString("dd/MM/yyyy")</td>
+                                    <td>
+                                        @if (!string.IsNullOrEmpty(item.Estado))
+                                        {
+                                            <span class="badge @GetEstadoClass(item.Estado)">@item.Estado</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-secondary">Pendiente</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (!string.IsNullOrEmpty(item.ComentariosAdmin))
+                                        {
+                                            <button type="button" class="btn btn-sm btn-outline-info" data-bs-toggle="modal" data-bs-target="#comentarioModal-@item.Id">
+                                                Ver comentarios
+                                            </button>
+
+                                            <div class="modal fade" id="comentarioModal-@item.Id" tabindex="-1" aria-labelledby="comentarioModalLabel-@item.Id" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="comentarioModalLabel-@item.Id">Comentarios del Reclutador</h5>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            @item.ComentariosAdmin
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">Sin comentarios</span>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@functions {
+    public string GetEstadoClass(string estado)
+    {
+        return estado switch
+        {
+            "Pendiente" => "bg-secondary",
+            "Revisión" => "bg-info",
+            "Entrevista" => "bg-warning",
+            "Contratado" => "bg-success",
+            "Rechazado" => "bg-danger",
+            _ => "bg-secondary"
+        };
+    }
+}
